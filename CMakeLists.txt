@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 2.5)
-project(hummingbird)
+project(armsy)
 
 # mymuduo最终编译成so动态库 设置动态库的路径 放置项目根目录的lib文件夹下面
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
@@ -12,4 +12,4 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
 aux_source_directory(./src SRC_LIST)
 
 # 编译动态库
-add_library(hummingbird SHARED ${SRC_LIST})
+add_library(armsy SHARED ${SRC_LIST})

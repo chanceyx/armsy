@@ -1,12 +1,13 @@
 #include <string>
 
-#include <hummingbird/logger.h>
-#include <hummingbird/tcp_server.h>
+#include <armsy/logger.h>
+#include <armsy/tcp_server.h>
 
 class EchoServer
 {
 public:
-    EchoServer(EventLoop *loop, const InetAddress &addr, const std::string &name)
+    EchoServer(EventLoop *loop, const InetAddress &addr,
+               const std::string &name)
         : server_(loop, addr, name), loop_(loop)
     {
         // 注册回调函数
@@ -14,15 +15,13 @@ public:
             std::bind(&EchoServer::onConnection, this, std::placeholders::_1));
 
         server_.setMessageCallback(
-            std::bind(&EchoServer::onMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            std::bind(&EchoServer::onMessage, this, std::placeholders::_1,
+                      std::placeholders::_2, std::placeholders::_3));
 
         // 设置合适的subloop线程数量
         server_.setThreadPoolSize(1);
     }
-    void start()
-    {
-        server_.start();
-    }
+    void start() { server_.start(); }
 
 private:
     // 连接建立或断开的回调函数
@@ -30,11 +29,13 @@ private:
     {
         if (conn->isConnected())
         {
-            LOG_INFO("Connection UP : %s", conn->getPeerAddr().getIpAndPort().c_str());
+            LOG_INFO("Connection UP : %s",
+                     conn->getPeerAddr().getIpAndPort().c_str());
         }
         else
         {
-            LOG_INFO("Connection DOWN : %s", conn->getPeerAddr().getIpAndPort().c_str());
+            LOG_INFO("Connection DOWN : %s",
+                     conn->getPeerAddr().getIpAndPort().c_str());
         }
     }
 
@@ -43,7 +44,8 @@ private:
     {
         std::string msg = buf->getAll();
         conn->send(msg);
-        // conn->shutdown();   // 关闭写端 底层响应EPOLLHUP => 执行closeCallback_
+        // conn->shutdown();   // 关闭写端 底层响应EPOLLHUP =>
+        // 执行closeCallback_
     }
 
     EventLoop *loop_;

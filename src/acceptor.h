@@ -9,29 +9,31 @@
 class EventLoop;
 class InetAddress;
 
-class Acceptor : noncopyable
-{
-public:
-    using NewConnectionCallback = std::function<void(int sockfd, const InetAddress &)>;
+class Acceptor : noncopyable {
+ public:
+  using NewConnectionCallback =
+      std::function<void(int sockfd, const InetAddress &)>;
 
-    Acceptor(EventLoop *loop, const InetAddress &listen_addr, bool reuseport);
-    ~Acceptor();
+  Acceptor(EventLoop *loop, const InetAddress &listen_addr, bool reuseport);
+  ~Acceptor();
 
-    // Set callback of new connection.
-    void setNewConnectionCallback(const NewConnectionCallback &callback) { new_connection_callback_ = callback; }
+  // Set callback of new connection.
+  void setNewConnectionCallback(const NewConnectionCallback &callback) {
+    new_connection_callback_ = callback;
+  }
 
-    // If acceptor is listenning.
-    bool isListenning() const { return listenning_; }
+  // If acceptor is listenning.
+  bool isListenning() const { return listenning_; }
 
-    // Listen on accpet_socket_.
-    void listen();
+  // Listen on accpet_socket_.
+  void listen();
 
-private:
-    void handleRead();
+ private:
+  void handleRead();
 
-    EventLoop *loop_;
-    Socket accept_socket_;
-    Channel accept_channel_;
-    NewConnectionCallback new_connection_callback_;
-    bool listenning_;
+  EventLoop *loop_;
+  Socket accept_socket_;
+  Channel accept_channel_;
+  NewConnectionCallback new_connection_callback_;
+  bool listenning_;
 };

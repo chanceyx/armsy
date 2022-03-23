@@ -16,13 +16,13 @@ cd `pwd`/build &&
 cd ..
 
 # 把头文件拷贝到 /usr/include/hummingbird       .so库拷贝到 /usr/lib
-if [ ! -d /usr/include/hummingbird ]; then
-    mkdir /usr/include/hummingbird
+if [ ! -d /usr/include/armsy ]; then
+    mkdir /usr/include/armsy
 fi
 
 for header in `ls ./src/*.h`
 do
-    cp $header /usr/include/hummingbird
+    cp $header /usr/include/armsy
 done
 
-cp `pwd`/lib/libhummingbird.so /usr/lib
+cp `pwd`/lib/libarmsy.so /usr/lib

@@ -5,3 +5,5 @@
 !Makefile
 build/
 lib/
+.vscode/
+src/log
